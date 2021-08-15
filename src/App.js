@@ -12,6 +12,7 @@ import {
   Route
 } from "react-router-dom";
 import { withAuth0 } from '@auth0/auth0-react';
+import Login from './Login';
 class App extends React.Component {
 
   render() {
@@ -25,7 +26,7 @@ class App extends React.Component {
               <Route exact path="/">
                 {/* TODO: if the user is logged in, render the `BestBooks` component, if they are not, render the `Login` component */}
                 {
-                  this.props.auth0.isAuthenticated && <BestBook/> 
+                  this.props.auth0.isAuthenticated ? <BestBook/> : <Login/>
                 }
               </Route>
               {/* TODO: add a route with a path of '/profile' that renders a `Profile` component */}
