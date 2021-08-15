@@ -1,0 +1,15 @@
+import React from "react";
+import { useAuth0 } from "@auth0/auth0-react";
+import '../Logout.css'
+import { Button } from "react-bootstrap";
+const Logout = () => {
+  const { logout } = useAuth0();
+
+  return (
+    <Button  variant="dark" onClick={() => logout({ returnTo: window.location.origin })}>
+      Log Out<i class="fas fa-sign-out-alt"></i>
+    </Button>
+  );
+};
+
+export default Logout;
