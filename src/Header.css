@@ -1,7 +1,14 @@
 a{
   color:#fff;
+  
 }
 
 a:hover{
   color:darkgrey;
+  text-decoration: none;
+}
+.header {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 150px;
 }
