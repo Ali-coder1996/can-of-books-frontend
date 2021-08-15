@@ -24,12 +24,12 @@ React and Bootstrap and auth0
 ## Credit and Collaborations
 [auth0.com](https://manage.auth0.com/)
 
-Name of feature: ________________________________
+Name of feature: 1
 
-Estimate of time needed to complete: _____
+Estimate of time needed to complete: 3 hours
 
-Start time: _____
+Start time: 2pm
 
-Finish time: _____
+Finish time: 5pm
 
-Actual time needed to complete: _____
+Actual time needed to complete: 1 hours
