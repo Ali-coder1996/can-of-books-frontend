@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from './Header';
-// import IsLoadingAndError from './IsLoadingAndError';
+import IsLoadingAndError from './IsLoadingAndError';
 import Footer from './Footer';
 import BestBook from './BestBooks';
 import Profile from './components/Profile';
@@ -20,7 +20,7 @@ class App extends React.Component {
     return(
       <>
         <Router>
-          {/* <IsLoadingAndError> */}
+          <IsLoadingAndError>
             <Header />
             <Switch>
               <Route exact path="/">
@@ -35,7 +35,7 @@ class App extends React.Component {
               </Route>
             </Switch>
             <Footer />
-          {/* </IsLoadingAndError> */}
+          </IsLoadingAndError>
         </Router>
       </>
     );
