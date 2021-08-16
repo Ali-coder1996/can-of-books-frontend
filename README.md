@@ -24,7 +24,7 @@ React and Bootstrap and auth0
 ## Credit and Collaborations
 [auth0.com](https://manage.auth0.com/)
 
-Name of feature: 1
+Name of feature: 1#Workflow
 
 Estimate of time needed to complete: 3 hours
 
