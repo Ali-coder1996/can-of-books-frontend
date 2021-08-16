@@ -1,3 +1,13 @@
 .jumbotron{
   margin-bottom: 0;
 }
+.card {
+  display: grid;
+  margin-top: 10px;
+  grid-template-columns: repeat(3,300px);
+  gap: 200px;
+}
+main {
+  width: 1400px;
+  margin: auto;
+}
