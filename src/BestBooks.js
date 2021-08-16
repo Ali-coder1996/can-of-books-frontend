@@ -17,7 +17,7 @@ class MyFavoriteBooks extends React.Component {
   }
 
   componentDidMount = () => {
-    let urlBooks = `http://localhost:3001/books?email=${this.props.auth0.user.email}`
+    let urlBooks = `https://can-of-book-ali.herokuapp.com/books?email=${this.props.auth0.user.email}`
     axios.get(urlBooks).then(res => {
       console.log(res.data)
       this.setState({
