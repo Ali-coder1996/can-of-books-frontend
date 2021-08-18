@@ -1,13 +1,11 @@
 .jumbotron{
   margin-bottom: 0;
 }
-.card {
-  display: grid;
-  margin-top: 10px;
-  grid-template-columns: repeat(3,300px);
-  gap: 200px;
+.carousel-control-prev-icon ,
+.carousel-control-next-icon{
+  background-color: #000;
 }
-main {
-  width: 1400px;
-  margin: auto;
+.carousel ,
+slide {
+  background-color: darkgrey;
 }

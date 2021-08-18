@@ -3,10 +3,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import './BestBooks.css';
 import axios from 'axios';
-import { Card, ListGroup,Button } from 'react-bootstrap';
+import { Carousel, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { withAuth0 } from "@auth0/auth0-react";
 import BookFormMOdel from './components/BookFormMOdel';
+import UpdataFormModel from './components/UpdataFormModel';
 
 class MyFavoriteBooks extends React.Component {
   constructor(props) {
@@ -14,7 +15,12 @@ class MyFavoriteBooks extends React.Component {
 
     this.state = {
       bookData: [],
-      show:false
+      show: false,
+      index:0,
+      showUpdata:false,
+      titleBook:'',
+      descriptionBook:'',
+      statusBook:'',    
     }
   }
 
@@ -27,43 +33,71 @@ class MyFavoriteBooks extends React.Component {
       })
     })
   }
-  addBook=()=>{
+  addBook = () => {
     this.setState({
-      show:true
+      show: true
     })
   }
-  closeHandler=()=>{
+  closeHandler = () => {
     this.setState({
-      show:false
+      show: false
     })
   }
-  bookCreat=(e)=>{
+  bookCreat = (e) => {
     e.preventDefault();
-    const data={
-      email:this.props.auth0.user.email,
-      bookTitle:e.target.bookTitle.value,
-      bookDescription:e.target.bookDescription.value,
-      bookStatus:e.target.bookStatus.value,
+    const data = {
+      email: this.props.auth0.user.email,
+      bookTitle: e.target.bookTitle.value,
+      bookDescription: e.target.bookDescription.value,
+      bookStatus: e.target.bookStatus.value,
     }
     console.log('0')
-    axios.post(`http://localhost:3001/book-creation`,data).then(item =>{
+    axios.post(`http://localhost:3001/book-creation`, data).then(item => {
       console.log('1')
 
       this.setState({
-        bookData:item.data
+        bookData: item.data
       })
     })
   }
-  deleteBook=(index)=>{
+  deleteBook = (index) => {
     console.log(index)
-    const data={
-      email:this.props.auth0.user.email,
+    const data = {
+      email: this.props.auth0.user.email,
     }
-    
-    axios.delete(`http://localhost:3001/book-delete/${index}`,{params:data}).then(item1 =>{
+
+    axios.delete(`http://localhost:3001/book-delete/${index}`, { params: data }).then(item1 => {
+      this.setState({
+        bookData: item1.data
+      })
+    })
+  }
+  closeUpdata = () => {
+    this.setState({
+      showUpdata: false
+    })
+  }
+  showUpdataData=(index)=>{
+      this.setState({
+      index:index,
+      showUpdata:true,
+      titleBook:this.state.bookData[index].title,
+      descriptionBook:this.state.bookData[index].description,
+      statusBook:this.state.bookData[index].status
+    })
+  }
+  bookUpdata=(e)=>{
+    e.preventDefault();
+    let updata ={
+      email: this.props.auth0.user.email,
+      bookTitle:e.target.bookTitle.value,
+      bookDescription:e.target.bookDescription.value,
+      bookStatus:e.target.bookStatus.value,
+    } 
+    axios.put(`http://localhost:3001/book-updata/${this.state.index}`,updata).then(item2 => {
       console.log('1')
       this.setState({
-        bookData:item1.data
+        bookData: item2.data
       })
     })
   }
@@ -72,31 +106,35 @@ class MyFavoriteBooks extends React.Component {
       <>
         <Jumbotron>
           <h1>My Favorite Books</h1>
-          <p>
-            This is a collection of my favorite books
-          </p>
+          <p>This is a collection of my favorite books</p>
+        
+
           <Button onClick={this.addBook} variant="primary" size="lg">
             Block level button
           </Button>
+        <BookFormMOdel bookCreat={this.bookCreat} close={this.closeHandler} show={this.state.show} />
         </Jumbotron>
-        <BookFormMOdel bookCreat={this.bookCreat} close={this.closeHandler} show={this.state.show}/>
-        <main className="card">
+        <Carousel>
           {this.state.bookData.length > 0 &&
-            this.state.bookData.map((item,index) => {
-              return (<Card style={{ width: '300px' }}>
-                <ListGroup key={index} >
-                  <ListGroup.Item variant="dark">{item.title}</ListGroup.Item>
-                  <ListGroup.Item>{item.description}</ListGroup.Item>
-                  <ListGroup.Item variant="warning">by:{item.status}</ListGroup.Item>
-                  <button onClick={()=>this.deleteBook(index)}>Delete</button>
-                </ListGroup>
-              </Card>)
+            this.state.bookData.map((item, index) => {
+              console.log(item._id)
+              return (
+                <Carousel.Item style={{ textAlign: 'center' }}>
+                  <h1>title:{item.title}</h1>
+                  <p>description:{item.description}</p>
+                  <h2>by:{item.status}</h2>
+                  <button onClick={() => this.deleteBook(index)}>Delete</button>
+                  <button onClick={() => this.showUpdataData(index)}>Updata</button>
+                </Carousel.Item>
+
+              )
             })
           }
-        </main>
+          </Carousel>
+          <UpdataFormModel titleBook={this.state.titleBook} descriptionBook={this.state.descriptionBook} statusBook={this.state.statusBook} 
+          bookUpdata={this.bookUpdata} close={this.closeUpdata} showUpdata={this.state.showUpdata}/>
       </>
     )
   }
-}
-
-export default withAuth0(MyFavoriteBooks);
+}      
+export default withAuth0(MyFavoriteBooks)
